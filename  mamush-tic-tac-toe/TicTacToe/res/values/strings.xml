@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Tic Tac Toe</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="menu_settings">Settings</string>
+    <string name="xLabel">X Score</string>
+    <string name="oLabel">O Score</string>
+    <string name="oButton">O</string>
+    <string name="new_game">New Game</string>
+    <string name="x_win_count">0</string>
+    <string name="o_win_count">0</string>
+
+</resources>
