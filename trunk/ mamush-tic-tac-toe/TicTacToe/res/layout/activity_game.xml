@@ -1,3 +1,4 @@
+<!-- Main activity layout -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -18,24 +19,30 @@
 
             <Button
                 android:id="@+id/button1"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:textSize="50sp"
-            	android:textColor="@+drawable/button_text" />
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:layout_margin="5dp"
+                android:background="@drawable/button_default"
+                android:textColor="@+drawable/button_text"
+                android:textSize="50sp" />
 
             <Button
                 android:id="@+id/button2"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:textSize="50sp"
-            	android:textColor="@+drawable/button_text" />
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:layout_margin="5dp"
+                android:background="@drawable/button_default"
+                android:textColor="@+drawable/button_text"
+                android:textSize="50sp" />
 
             <Button
                 android:id="@+id/button3"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:textSize="50sp"
-            	android:textColor="@+drawable/button_text" />
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:layout_margin="5dp"
+                android:background="@drawable/button_default"
+                android:textColor="@+drawable/button_text"
+                android:textSize="50sp" />
         </TableRow>
 
         <TableRow
@@ -45,24 +52,30 @@
 
             <Button
                 android:id="@+id/button4"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:textSize="50sp"
-            	android:textColor="@+drawable/button_text" />
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:layout_margin="5dp"
+                android:background="@drawable/button_default"
+                android:textColor="@+drawable/button_text"
+                android:textSize="50sp" />
 
             <Button
                 android:id="@+id/button5"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:textSize="50sp"
-            	android:textColor="@+drawable/button_text" />
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:layout_margin="5dp"
+                android:background="@drawable/button_default"
+                android:textColor="@+drawable/button_text"
+                android:textSize="50sp" />
 
             <Button
                 android:id="@+id/button6"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:textSize="50sp"
-            	android:textColor="@+drawable/button_text" />
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:layout_margin="5dp"
+                android:background="@drawable/button_default"
+                android:textColor="@+drawable/button_text"
+                android:textSize="50sp" />
         </TableRow>
 
         <TableRow
@@ -72,24 +85,30 @@
 
             <Button
                 android:id="@+id/button7"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:textSize="50sp"
-            	android:textColor="@+drawable/button_text" />
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:layout_margin="5dp"
+                android:background="@drawable/button_default"
+                android:textColor="@+drawable/button_text"
+                android:textSize="50sp" />
 
             <Button
                 android:id="@+id/button8"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:textSize="50sp"
-            	android:textColor="@+drawable/button_text" />
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:layout_margin="5dp"
+                android:background="@drawable/button_default"
+                android:textColor="@+drawable/button_text"
+                android:textSize="50sp" />
 
             <Button
                 android:id="@+id/button9"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:textSize="50sp"
-            	android:textColor="@+drawable/button_text" />
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:layout_margin="5dp"
+                android:background="@drawable/button_default"
+                android:textColor="@+drawable/button_text"
+                android:textSize="50sp" />
         </TableRow>
     </TableLayout>
 
