@@ -1,7 +1,10 @@
 package ciccarello.mamush.tictactoe;
 
-import android.os.Bundle;
 import android.app.Activity;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
+import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,26 +14,38 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 /**
- * Main activity of the TicTacToe game
+ * Main activity of the TicTacToe game.
  * @author Anthony Ciccarello and Mamush Ciccarello
  *
  */
 public class GameActivity extends Activity {
 
 	/** true if it is x's turn to play, if o's false */ 
-	protected boolean xTurn = false;
+	private boolean xTurn = false;
 	/** 2D array to hold board values */
-	protected char board[][] = new char[3][3];
+	private char board[][] = new char[3][3];
 	
 	/** Count of team X wins */
-	protected int xScore = 0;
+	private int xScore = 0;
 	/** Count of team O wins */
-	protected int oScore = 0;
+	private int oScore = 0;
+	
+	/** Array that can hold 3 positions (for knowing where win is) */
+	int positions[][] = new int[3][2];
+	final static int X_INDEX = 0;
+	final static int Y_INDEX = 1;
+	
+	// Keys for preferences
+	private final static String X_KEY = "X_SCORE_KEY";
+	private final static String O_KEY = "O_SCORE_KEY";
+	private final static int	DEFAULT_SCORE = 0;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_game);
+		
+		// Set up the on click listener
 		setupOnClickListeners();
 		Button button = (Button) findViewById(R.id.newGameButton);
 		button.setOnClickListener(new View.OnClickListener() {
@@ -39,11 +54,17 @@ public class GameActivity extends Activity {
 				newGame();
 			}
 		});
+		
+		// Restore score from preferences
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+		xScore = prefs.getInt(X_KEY, DEFAULT_SCORE);
+		oScore = prefs.getInt(O_KEY, DEFAULT_SCORE);
+		updateScore();
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
+		// Adds "Reset Score Count to menu
 		getMenuInflater().inflate(R.menu.activity_game, menu);
 		return true;
 	}
@@ -115,10 +136,11 @@ public class GameActivity extends Activity {
 	 * <li>Change button text</li>
 	 * <li>Disable clicking on the button</li>
 	 * <li>Change who's turn it is</li>
+	 * <li>Check for win</li>
 	 * </ol>
-	 * @param x
-	 * @param y
-	 * @param B
+	 * @param x Horizontal position in grid starting at 0
+	 * @param y Vertical position in grid starting at 0
+	 * @param B The button that was pressed
 	 */
 	public void clickButton(int x, int y, Button B) {
 		String team;
@@ -144,9 +166,10 @@ public class GameActivity extends Activity {
 	/**
 	 * Method to check for a win of a certain team.<br />
 	 * <br />
+	 * Stores the x/y position of three winning buttons in the positions[][] array (or junk data if no win). 
 	 * If a team wins, the win count will be updated and displayed
 	 * 
-	 * @param team Char specifying what team to check for
+	 * @param player Char specifying what team to check for
 	 * @return true if team char has three values in a row, column, or diagonal; else false
 	 */
 	private boolean checkTeamWin(char player) {
@@ -156,6 +179,8 @@ public class GameActivity extends Activity {
 			total = 0;
 			for (int y = 0; y < 3; y++){
 				if (board[x][y] == player) {
+					positions[total][X_INDEX] = x;
+					positions[total][Y_INDEX] = y;
 					total++;
 				}
 			}
@@ -168,6 +193,8 @@ public class GameActivity extends Activity {
 			total = 0;
 			for (int x = 0; x < 3; x++) {
 				if (board[x][y] == player) {
+					positions[total][X_INDEX] = x;
+					positions[total][Y_INDEX] = y;
 					total++;
 				}
 			}
@@ -180,6 +207,8 @@ public class GameActivity extends Activity {
 		total = 0;
 		for (int i = 0; i < 3; i++) {
 			if (board[i][i]== player) {
+				positions[total][X_INDEX] = i;
+				positions[total][Y_INDEX] = i;
 				total++;
 			
 			}
@@ -194,6 +223,8 @@ public class GameActivity extends Activity {
 		for (int x = 0; x < 3; x++) {
 			for (int y = 0; y < 3; y++) {
 				if (x + y == 2 && board[x][y] == player) {
+					positions[total][X_INDEX] = x;
+					positions[total][Y_INDEX] = y;
 					total++;
 				}
 			}
@@ -208,7 +239,14 @@ public class GameActivity extends Activity {
 	}
 	
 	/**
-	 * Method to check if there has been a winning move
+	 * Method to check if there has been a winning move. <br />
+	 * <br />
+	 * If there is a win
+	 * <ul>
+	 * <li>Highlights three winning buttons</li>
+	 * <li>Disables all buttons</li>
+	 * <li>Updates score</li>
+	 * </ul>
 	 * 
 	 * @return true if a team has won
 	 */
@@ -224,7 +262,13 @@ public class GameActivity extends Activity {
 		
 		if (winner == '\0') {
 			return false;
-		} else {
+		} else { // If there is a win
+			// Highlight 3 winning buttons
+			for (int i = 0; i < 3; i++) {
+				getButton(positions[i][X_INDEX], positions[i][Y_INDEX]).setBackgroundResource(R.drawable.button_win);
+				
+			}
+			// Disable all buttons
 			for (int x = 0; x < 3; x++) {
 				for (int y = 0; y < 3; y++) {
 					getButton(x,y).setEnabled(false);
@@ -244,6 +288,7 @@ public class GameActivity extends Activity {
 	 *   <ul>
 	 *     <li>Clears the text</li>
 	 *     <li>Enables the button</li>
+	 *     <li>Resets the background</li>
 	 *   </ul>
 	 * </ul>
 	 */
@@ -254,31 +299,37 @@ public class GameActivity extends Activity {
 				Button b = getButton(x, y);
 				b.setEnabled(true);
 				b.setText("");
+				b.setBackgroundResource(R.drawable.button_default);
 			}
 		}
 	}
 	
 	/**
-	 * Method to update the screen with the scores
+	 * Method to update the screen with the scores. Stores score in preferences.
 	 */
 	void updateScore() {
+		Editor prefEditor = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit();
+		
 		// Set xScore
 		TextView scoreLabel = (TextView) findViewById(R.id.xScore);
 		scoreLabel.setText(Integer.toString(xScore));
+		prefEditor.putInt(X_KEY, xScore);
 		
 		// Set oScore
 		scoreLabel = (TextView) findViewById(R.id.oScore);
 		scoreLabel.setText(Integer.toString(oScore));
+		prefEditor.putInt(O_KEY, oScore);
+		
+		prefEditor.commit();
 	}
 	
 	/**
-	 * Clears the scores of the two teams
+	 * Clears the scores of the two teams and updates score on screen.
 	 */
 	private void resetScore() {
 		xScore = 0;
 		oScore = 0;
 		updateScore();
 	}
-
 }
 
